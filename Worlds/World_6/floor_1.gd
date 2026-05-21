@@ -1,14 +1,16 @@
 extends TileMapLayer
-class_name Floor
 
-func get_floor_data(only_walkable:bool=false):
-	var floor_data=[]
-	for cell in get_used_cells():
-		var cell_data = {
+func get_cell_data(cell:Vector2):
+	return {
 			"cell":cell,
 			'walkable':get_cell_tile_data(Vector2(cell)).get_custom_data('Walkable'),
 			'elevation':get_cell_tile_data(Vector2(cell)).get_custom_data('Elevation'),
 		}
+
+func get_floor_data(only_walkable:bool=false):
+	var floor_data=[]
+	for cell in get_used_cells():
+		var cell_data = get_cell_data(cell)
 		if only_walkable && get_cell_tile_data(Vector2(cell)).get_custom_data('Walkable'):
 			floor_data.append(cell_data)
 		elif !only_walkable: floor_data.append(cell_data)
@@ -25,9 +27,8 @@ func get_avaliable_surrounding_cells(cell:Vector2i):
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	print('aver2')
 	#print(get_floor_data(true))
-	print(get_used_cells())
+	#print(get_used_cells())
 	pass # Replace with function body.
 
 

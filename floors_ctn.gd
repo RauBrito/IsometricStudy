@@ -29,6 +29,14 @@ func get_starting_point():
 	print(floor_1)
 	pass
 
+func get_cell_data(cell:Vector2i):
+	var cell_data = {
+		"cell":cell,
+		'walkable':floor_1.get_cell_tile_data(Vector2(cell)).get_custom_data('Walkable'),
+		'elevation':floor_1.get_cell_tile_data(Vector2(cell)).get_custom_data('Elevation'),
+	}
+	return cell_data
+
 func _ready() -> void:
 	print('floor_ready')
 	#starting_pos = floor_1.map_to_local(all_floors[0].get_used_cells()[0])
