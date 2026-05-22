@@ -6,7 +6,7 @@ extends CharacterBody2D
 
 
 
-var cell_pos = Vector2i(6,19)
+var cell_pos = Vector2i(-3,16)
 
 func _ready():
 	#print('aver')
