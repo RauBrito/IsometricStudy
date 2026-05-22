@@ -75,5 +75,4 @@ autoplay = "Face"
 frame_progress = 0.5803359
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1089885062]
-visible = false
 shape = SubResource("RectangleShape2D_gh1j6")
