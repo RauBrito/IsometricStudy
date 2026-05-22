@@ -2,12 +2,14 @@ extends CharacterBody2D
 @onready var floor_1: TileMapLayer = $"../floor_1"
 @onready var tiles_ctn: Node2D = $"../Tiles_ctn"
 @onready var MOVE_TILE = preload("uid://bhsujomjfipsm")
+@onready var ramsa: CharacterBody2D = $"../Ramsa"
 
 
 
 
 var cell_pos = Vector2i(-1,16)
-var movement = 2
+var movement = 3
+var is_movement = false
 
 func _ready():
 	position = floor_1.map_to_local(cell_pos)
@@ -44,7 +46,36 @@ func move(x:int,y:int):
 	)
 
 
+
+func _input(event):
+	if event.is_action_pressed("up"): 
+		move(16,-8)
+	if event.is_action_pressed("down"): 
+		move(-16,8)
+	if event.is_action_pressed("left"): 
+		move(-16,-8)
+	if event.is_action_pressed("right"): 
+		move(16,8)
+	if event.is_action_pressed("selection"): 
+		handle_movement()
+	if event.is_action_pressed("deselection"): 
+		remove_tiles()
+
+# ALL MOVEMENT LOGIC
+func handle_movement():
+	if is_movement:
+		var cell_data = floor_1.get_cell_data(cell_pos)
+		var future_position = floor_1.map_to_local(cell_pos)
+		ramsa.position = Vector2(
+			future_position.x,
+			future_position.y + (-8*cell_data.elevation))
+		remove_tiles()
+	else:
+		show_move(cell_pos,movement)
+
 func show_move(cell:Vector2i,amount:int):
+	remove_tiles()
+	is_movement = true
 	var all_tiles = retrieve_movement_tiles(cell,amount)
 	var floor_data = floor_1.get_floor_data(true)
 	var valid_cells = [cell_pos]
@@ -54,7 +85,6 @@ func show_move(cell:Vector2i,amount:int):
 	
 	for each in valid_cells:
 		create_tile(each)
-
 
 func retrieve_movement_tiles(cell:Vector2i,amount:int):
 	if amount == 0:
@@ -94,31 +124,19 @@ func create_tile(cell:Vector2i):
 	new_instance.global_position = future_position
 	pass
 
+func remove_tiles():
+	is_movement = false
+	for child in tiles_ctn.get_children():
+		child.queue_free()
 
-func _input(event):
-	if event.is_action_pressed("up"): 
-		move(16,-8)
-	if event.is_action_pressed("down"): 
-		move(-16,8)
-	if event.is_action_pressed("left"): 
-		move(-16,-8)
-	if event.is_action_pressed("right"): 
-		move(16,8)
-	if event.is_action_pressed("selection"): 
-		for child in tiles_ctn.get_children():
-			child.queue_free()
-		show_move(cell_pos,movement)
-
-	
-
-func line_vertical(max:Vector2,num:int):
+func line_vertical(max_tile:Vector2,num:int):
 	return Vector2(
-			max.x - num,
-			max.y + num,
+			max_tile.x - num,
+			max_tile.y + num,
 		)
 
-func line_horizontal(max:Vector2,num:int):
+func line_horizontal(max_tile:Vector2,num:int):
 	return Vector2(
-			max.x + num,
-			max.y + num,
+			max_tile.x + num,
+			max_tile.y + num,
 		)

@@ -69,11 +69,13 @@ size = Vector2(16, 30)
 [node name="Node2D" type="CharacterBody2D" unique_id=1972412629]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=174017421]
+position = Vector2(0, -11)
 sprite_frames = SubResource("SpriteFrames_l7ijt")
 animation = &"Face"
 autoplay = "Face"
 frame_progress = 0.5803359
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1089885062]
+position = Vector2(0, -10.999999)
 scale = Vector2(0.99999994, 0.99999994)
 shape = SubResource("RectangleShape2D_gh1j6")

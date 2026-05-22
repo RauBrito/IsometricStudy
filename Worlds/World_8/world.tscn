@@ -362,5 +362,4 @@ tile_set = SubResource("TileSet_wnioq")
 [node name="Selection Box" parent="." unique_id=748368509 instance=ExtResource("3_paxgx")]
 
 [node name="Ramsa" parent="." unique_id=1972412629 instance=ExtResource("5_kjrp3")]
-visible = false
-position = Vector2(160, 117)
+position = Vector2(174, 151)
