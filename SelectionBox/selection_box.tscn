@@ -1,7 +1,41 @@
 [gd_scene format=3 uid="uid://b8x1u0jx8fnjb"]
 
-[ext_resource type="Script" uid="uid://hj2lgdplvv3u" path="res://SelectionBox/SB_1/selection_box.gd" id="1_h2sgf"]
 [ext_resource type="Texture2D" uid="uid://dp7ixpreqfk0" path="res://Assets/selection_arrow.png" id="2_v80g3"]
+
+[sub_resource type="GDScript" id="GDScript_41pfd"]
+script/source = "extends CharacterBody2D
+@onready var tile_map_layer: TileMapLayer = $\"../TileMapLayer\"
+var INITIAL_POS = Vector2i(6,24)
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	position = tile_map_layer.map_to_local(INITIAL_POS)
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+
+func move(x:int,y:int):
+	position.x += x
+	position.y += y
+
+func _input(event):
+	if event.is_action_pressed(\"up\"): 
+		move(16,-8)
+	if event.is_action_pressed(\"down\"): 
+		move(-16,8)
+	if event.is_action_pressed(\"left\"): 
+		move(-16,-8)
+	if event.is_action_pressed(\"right\"): 
+		move(16,8)
+	if event.is_action_pressed(\"selection\"): 
+		var grid = tile_map_layer.local_to_map(position)
+		var grid_pos = tile_map_layer.map_to_local(grid)
+		print(position)
+		print(grid_pos)
+		print(grid)
+"
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_cg0ex"]
 animations = []
@@ -46,7 +80,7 @@ animations = [{
 size = Vector2(32, 18)
 
 [node name="Selection Box" type="CharacterBody2D" unique_id=748368509]
-script = ExtResource("1_h2sgf")
+script = SubResource("GDScript_41pfd")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1746366886]
 visible = false

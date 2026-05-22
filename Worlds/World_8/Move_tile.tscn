@@ -1,21 +1,21 @@
-[gd_scene format=3 uid="uid://bwmk1wuctbt7g"]
+[gd_scene format=3 uid="uid://bhsujomjfipsm"]
 
-[ext_resource type="Texture2D" uid="uid://dlgql61ujkoej" path="res://Assets/SELECT BOX.png" id="1_nvlfy"]
+[ext_resource type="Texture2D" uid="uid://dlgql61ujkoej" path="res://Assets/SELECT BOX.png" id="1_hqspm"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ncdb2"]
-atlas = ExtResource("1_nvlfy")
+atlas = ExtResource("1_hqspm")
 region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rst74"]
-atlas = ExtResource("1_nvlfy")
+atlas = ExtResource("1_hqspm")
 region = Rect2(32, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_blirn"]
-atlas = ExtResource("1_nvlfy")
+atlas = ExtResource("1_hqspm")
 region = Rect2(64, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6h8yt"]
-atlas = ExtResource("1_nvlfy")
+atlas = ExtResource("1_hqspm")
 region = Rect2(96, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_swyr1"]

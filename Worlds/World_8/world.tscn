@@ -1,9 +1,11 @@
-[gd_scene format=4 uid="uid://ctn6yct8i6c4o"]
+[gd_scene format=4 uid="uid://c43ig2hg7ph1n"]
 
-[ext_resource type="Texture2D" uid="uid://dmbcnntyrxouu" path="res://Assets/iso_tile_export.png" id="2_4ebxq"]
-[ext_resource type="Script" uid="uid://fkhsjg7tx6fu" path="res://Worlds/World_5/floor_1.gd" id="2_khiyj"]
-[ext_resource type="Script" uid="uid://cfevj2hyb2e38" path="res://Worlds/World_6/sb_world_6.gd" id="2_n0bsu"]
-[ext_resource type="PackedScene" uid="uid://b8x1u0jx8fnjb" path="res://SelectionBox/selection_box.tscn" id="4_k7ytx"]
+[ext_resource type="Texture2D" uid="uid://dmbcnntyrxouu" path="res://Assets/iso_tile_export.png" id="1_yksbe"]
+[ext_resource type="Script" uid="uid://devrtq0o5xnv0" path="res://Worlds/World_8/floor_1.gd" id="2_cch3j"]
+[ext_resource type="PackedScene" uid="uid://b8x1u0jx8fnjb" path="res://SelectionBox/selection_box.tscn" id="3_paxgx"]
+[ext_resource type="Script" uid="uid://b86rojmuolig7" path="res://SelectionBox/sb.gd" id="4_dk0vd"]
+[ext_resource type="PackedScene" uid="uid://cltqn0rc00v8d" path="res://Characters/Ramsa.tscn" id="5_kjrp3"]
+[ext_resource type="Script" uid="uid://ryunlrgjxm6j" path="res://Characters/ramsa.gd" id="6_d4u1t"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_s2gog"]
 vertices = PackedVector2Array(16, -16, 0, -8, -16, -16, 0, -24)
@@ -36,7 +38,7 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(0, -16, -16, -8, 0, 0, 
 agent_radius = 0.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_befpb"]
-texture = ExtResource("2_4ebxq")
+texture = ExtResource("1_yksbe")
 texture_region_size = Vector2i(32, 32)
 0:1/0 = 0
 0:1/0/texture_origin = Vector2i(0, -8)
@@ -344,18 +346,15 @@ sources/0 = SubResource("TileSetAtlasSource_befpb")
 
 [node name="floor_1" type="TileMapLayer" parent="." unique_id=332532058]
 y_sort_enabled = true
-tile_map_data = PackedByteArray("AAAGABMAAAAIAAkAAAAHABQAAAAIAAkAAAAHABIAAAAJAAkAAAAHABMAAAAJAAkAAAAGABIAAAALAAkAAAA=")
+tile_map_data = PackedByteArray("AAAGABMAAAAIAAkAAAAHABQAAAAIAAkAAAAHABIAAAAJAAkAAAAHABMAAAAJAAkAAAAGABIAAAALAAkAAAAHABEAAAAKAAkAAAAHABUAAAAIAAkAAAAIABYAAAAIAAkAAAAIABcAAAAIAAkAAAAIABQAAAAIAAkAAAAIABMAAAAIAAkAAAAJABIAAAAIAAkAAAAIABIAAAAJAAkAAAAIABUAAAAIAAkAAAAJABQAAAAIAAkAAAAJABMAAAAIAAkAAAAJABYAAAAIAAkAAAAJABUAAAAIAAkAAAAKABQAAAAIAAkAAAAIABEAAAAJAAkAAAAIABAAAAAKAAkAAAAIAA8AAAAKAAkAAAAJABAAAAAKAAkAAAAJABEAAAAKAAkAAAAKABIAAAAKAAkAAAAKABMAAAAKAAkAAAA=")
 tile_set = SubResource("TileSet_wnioq")
-navigation_visibility_mode = 1
-script = ExtResource("2_khiyj")
+script = ExtResource("2_cch3j")
 
-[node name="Selection Box" parent="." unique_id=748368509 instance=ExtResource("4_k7ytx")]
-visible = false
-script = ExtResource("2_n0bsu")
+[node name="Tiles_ctn" type="Node2D" parent="." unique_id=1747206076]
 
-[node name="floor_2" type="TileMapLayer" parent="." unique_id=1907576641]
-visible = false
-y_sort_enabled = true
-tile_map_data = PackedByteArray("AAAAAAQAAAAIAAkAAAABAAIAAAAKAAkAAAAAAAMAAAAJAAkAAAABAAQAAAAJAAkAAAAAAAUAAAAIAAkAAAABAAYAAAAIAAkAAAABAAMAAAAJAAkAAAACAAQAAAAIAAkAAAABAAUAAAAIAAkAAAA=")
-tile_set = SubResource("TileSet_wnioq")
-navigation_visibility_mode = 1
+[node name="Selection Box" parent="." unique_id=748368509 instance=ExtResource("3_paxgx")]
+script = ExtResource("4_dk0vd")
+
+[node name="Ramsa" parent="." unique_id=1972412629 instance=ExtResource("5_kjrp3")]
+position = Vector2(224, 148)
+script = ExtResource("6_d4u1t")

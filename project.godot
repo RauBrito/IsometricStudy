@@ -11,7 +11,6 @@ config_version=5
 [application]
 
 config/name="IsometricStudy"
-run/main_scene="uid://cf6vcnhynmk6y"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 

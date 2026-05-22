@@ -16,26 +16,14 @@ func get_floor_data(only_walkable:bool=false):
 		elif !only_walkable: floor_data.append(cell_data)
 	return floor_data
 
-func get_available_surrounding_cells(cell:Vector2i,amount:int = 1):
-	if amount == 0:
-		print('ok?')
-		return []
-	else:
-		print('why')
-		var surr_cells = get_surrounding_cells(cell)
-		
-		var floor_data = get_floor_data(true)
-		var avaliable_surrounding_cells = []
-		for _cell in floor_data:
-			if surr_cells.has(_cell.cell):				
-				avaliable_surrounding_cells.append(_cell)
-
-		for each_cell in avaliable_surrounding_cells:
-			for c in get_available_surrounding_cells(each_cell.cell,amount-1):
-				print(c)
-				avaliable_surrounding_cells.append(c)
-		
-		return avaliable_surrounding_cells
+func get_available_surrounding_cells(cell:Vector2i):
+	var surr_cells = get_surrounding_cells(cell)
+	var floor_data = get_floor_data(true)
+	var avaliable_surrounding_cells = []
+	for _cell in floor_data:
+		if surr_cells.has(_cell.cell):				
+			avaliable_surrounding_cells.append(_cell)
+	return avaliable_surrounding_cells
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
