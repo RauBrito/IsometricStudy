@@ -6,15 +6,11 @@ extends CharacterBody2D
 
 
 
-var cell_pos = Vector2i(-3,16)
+var cell_pos = Vector2i(-1,16)
+var movement = 2
 
 func _ready():
-	#print('aver')
-	#print(floor.get_used_cells())
-	#print(floor.map_to_local(Vector2i(1,1)))
 	position = floor_1.map_to_local(cell_pos)
-	#print(position)
-	#print(floor_1.get_available_surrounding_cells(cell_pos))
 	pass
 
 
@@ -47,21 +43,42 @@ func move(x:int,y:int):
 		plain_future_pos.y + (-8*future_cell_data.elevation)
 	)
 
+
 func show_move(cell:Vector2i,amount:int):
-	for child in tiles_ctn.get_children():
-		child.queue_free()
+	var all_tiles = retrieve_movement_tiles(cell,amount)
+	var floor_data = floor_1.get_floor_data(true)
+	var valid_cells = [cell_pos]
+	for each in floor_data:
+		if all_tiles.has(each.cell):
+			valid_cells.append(each.cell)
 	
-	var surr_cells = floor_1.get_available_surrounding_cells(cell)
-	if amount == 2:
-		var more_cells = []
-		for each in surr_cells:
-			for each_cell in floor_1.get_available_surrounding_cells(each.cell):
-				more_cells.append(each_cell)
-		print(more_cells)
-	create_tile(cell)
-	for each_cell in surr_cells:
-		create_tile(each_cell.cell)
-	pass
+	for each in valid_cells:
+		create_tile(each)
+
+
+func retrieve_movement_tiles(cell:Vector2i,amount:int):
+	if amount == 0:
+		return [cell_pos]
+		
+	
+	var max_left = Vector2(cell_pos.x,cell_pos.y - amount)
+	var max_right = Vector2(cell_pos.x,cell_pos.y + amount)
+	var max_top = Vector2(cell_pos.x + amount,cell_pos.y)
+	var max_down = Vector2(cell_pos.x - amount,cell_pos.y)
+	
+	var maxed = [max_left,max_right,max_top,max_down]
+	for each in (amount - 1):
+		var num = each + 1
+		maxed.append(line_vertical(max_left,num))
+		maxed.append(line_vertical(max_top,num))
+		maxed.append(line_horizontal(max_left,num))
+		maxed.append(line_horizontal(max_down,num))
+	
+	
+	#for each in maxed:
+		#create_tile(each)
+	maxed.append_array(retrieve_movement_tiles(cell,amount-1))
+	return maxed
 
 func create_tile(cell:Vector2i):
 	var new_instance = MOVE_TILE.instantiate()
@@ -88,4 +105,20 @@ func _input(event):
 	if event.is_action_pressed("right"): 
 		move(16,8)
 	if event.is_action_pressed("selection"): 
-		show_move(cell_pos,2)
+		for child in tiles_ctn.get_children():
+			child.queue_free()
+		show_move(cell_pos,movement)
+
+	
+
+func line_vertical(max:Vector2,num:int):
+	return Vector2(
+			max.x - num,
+			max.y + num,
+		)
+
+func line_horizontal(max:Vector2,num:int):
+	return Vector2(
+			max.x + num,
+			max.y + num,
+		)
