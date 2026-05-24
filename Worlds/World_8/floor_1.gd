@@ -58,11 +58,18 @@ func setup_grid():
 	astar.default_compute_heuristic = AStarGrid2D.HEURISTIC_MANHATTAN
 	astar.default_estimate_heuristic = AStarGrid2D.HEURISTIC_MANHATTAN
 	
+	#4.5 Set obstacles
+	var all_cells = get_floor_data()
+	for cell in all_cells:
+		if !cell.walkable:
+			print(cell.cell)
+			astar.set_point_solid(cell.cell, true)
 	# 5. Bake the configuration! (CRITICAL STEP)
 	astar.update()
 
 func get_movement_route(my_grid_pos: Vector2i, target_grid_pos: Vector2i):
 	# Check if the target is out of bounds or completely solid first
+	setup_grid()
 	if not astar.is_in_bounds(target_grid_pos.x, target_grid_pos.y):
 		return []
 	if astar.is_point_solid(target_grid_pos):
