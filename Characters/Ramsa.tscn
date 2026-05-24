@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cltqn0rc00v8d"]
 
 [ext_resource type="Texture2D" uid="uid://blqnq4b8aao6x" path="res://Assets/Ramsa.png" id="1_gh1j6"]
+[ext_resource type="Script" uid="uid://ryunlrgjxm6j" path="res://Characters/ramsa.gd" id="1_l2dba"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hwna4"]
 atlas = ExtResource("1_gh1j6")
@@ -67,15 +68,19 @@ animations = [{
 size = Vector2(16, 30)
 
 [node name="Node2D" type="CharacterBody2D" unique_id=1972412629]
+script = ExtResource("1_l2dba")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=174017421]
 position = Vector2(0, -11)
 sprite_frames = SubResource("SpriteFrames_l7ijt")
 animation = &"Face"
 autoplay = "Face"
-frame_progress = 0.5803359
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1089885062]
 position = Vector2(0, -10.999999)
 scale = Vector2(0.99999994, 0.99999994)
 shape = SubResource("RectangleShape2D_gh1j6")
+
+[node name="Move_Timer" type="Timer" parent="." unique_id=1634443763]
+wait_time = 0.5
+one_shot = true

@@ -7,12 +7,15 @@ extends CharacterBody2D
 
 
 
-var cell_pos = Vector2i(-1,16)
-var movement = 3
+var cell_pos = Vector2i(-5,12)
 var is_movement = false
+
 
 func _ready():
 	position = floor_1.map_to_local(cell_pos)
+	#var movements = floor_1.get_movement_route(Vector2i(-5,12),Vector2i(-4,14))
+	
+	#move_timer.start()
 	pass
 
 
@@ -64,14 +67,15 @@ func _input(event):
 # ALL MOVEMENT LOGIC
 func handle_movement():
 	if is_movement:
-		var cell_data = floor_1.get_cell_data(cell_pos)
-		var future_position = floor_1.map_to_local(cell_pos)
-		ramsa.position = Vector2(
-			future_position.x,
-			future_position.y + (-8*cell_data.elevation))
+		#var cell_data = floor_1.get_cell_data(cell_pos)
+		#var future_position = floor_1.map_to_local(cell_pos)
+		#ramsa.position = Vector2(
+			#future_position.x,
+			#future_position.y + (-8*cell_data.elevation))
+		ramsa.animate_movement(cell_pos,floor_1)
 		remove_tiles()
 	else:
-		show_move(cell_pos,movement)
+		show_move(cell_pos,ramsa.movement)
 
 func show_move(cell:Vector2i,amount:int):
 	remove_tiles()
