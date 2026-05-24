@@ -13,8 +13,10 @@ var is_movement = false
 
 func _ready():
 	position = floor_1.map_to_local(cell_pos)
-	#var movements = floor_1.get_movement_route(Vector2i(-5,12),Vector2i(-4,14))
+	#ramsa.animate_movement(floor_1)
 	
+	
+	#var movements = floor_1.get_movement_route(Vector2i(-5,12),Vector2i(-4,14))
 	#move_timer.start()
 	pass
 
@@ -72,7 +74,9 @@ func handle_movement():
 		#ramsa.position = Vector2(
 			#future_position.x,
 			#future_position.y + (-8*cell_data.elevation))
-		ramsa.animate_movement(cell_pos,floor_1)
+		var all_cells = floor_1.get_movement_route(ramsa.my_cell,cell_pos)
+		all_cells.pop_front()
+		ramsa.animate_movement(floor_1,all_cells)
 		remove_tiles()
 	else:
 		show_move(cell_pos,ramsa.movement)
