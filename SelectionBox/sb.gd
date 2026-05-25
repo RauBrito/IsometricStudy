@@ -84,21 +84,18 @@ func handle_movement():
 		show_move(cell_pos,ramsa.movement)
 
 func show_move(cell:Vector2i,amount:int):
-	remove_tiles()
-	is_movement = true
-	var all_tiles = retrieve_movement_tiles(cell,amount)
-	var floor_data = floor_1.get_floor_data(true)
-	var valid_cells = [cell_pos]
-	for each in floor_data:
-		if all_tiles.has(each.cell):
-			valid_cells.append(each.cell)
-	
-	for each in valid_cells:
-		create_tile(each)
-
-func retrieve_movement_tiles(start_cell:Vector2i,amount:int):
-	print(floor_1.get_available_surrounding_cells(start_cell,true))
-	return floor_1.get_available_surrounding_cells(start_cell,true)
+	pass
+	#remove_tiles()
+	#is_movement = true
+	#var all_tiles = retrieve_movement_tiles(cell,amount)
+	#var floor_data = floor_1.get_floor_data(true)
+	#var valid_cells = [cell_pos]
+	#for each in floor_data:
+		#if all_tiles.has(each.cell):
+			#valid_cells.append(each.cell)
+	#
+	#for each in valid_cells:
+		#create_tile(each)
 
 func create_tile(cell:Vector2i):
 	var new_instance = MOVE_TILE.instantiate()
@@ -118,57 +115,3 @@ func remove_tiles():
 	is_movement = false
 	for child in tiles_ctn.get_children():
 		child.queue_free()
-
-func line_vertical(max_tile:Vector2,num:int):
-	return Vector2(
-			max_tile.x - num,
-			max_tile.y + num,
-		)
-
-func line_horizontal(max_tile:Vector2,num:int):
-	return Vector2(
-			max_tile.x + num,
-			max_tile.y + num,
-		)
-
-
-
-
-func retrieve_movement_tiles_old(cell:Vector2i,amount:int):
-	if amount == 0:
-		return [cell_pos]
-		
-	
-	var max_left = Vector2(cell_pos.x,cell_pos.y - amount)
-	var max_right = Vector2(cell_pos.x,cell_pos.y + amount)
-	var max_top = Vector2(cell_pos.x + amount,cell_pos.y)
-	var max_down = Vector2(cell_pos.x - amount,cell_pos.y)
-	
-	var maxed = [max_left,max_right,max_top,max_down]
-	for each in (amount - 1):
-		var num = each + 1
-		maxed.append(line_vertical(max_left,num))
-		maxed.append(line_vertical(max_top,num))
-		maxed.append(line_horizontal(max_left,num))
-		maxed.append(line_horizontal(max_down,num))
-	
-	
-	#for each in maxed:
-		#create_tile(each)
-	maxed.append_array(retrieve_movement_tiles_old(cell,amount-1))
-	return maxed
-
-
-func four_directions(cell,visited):
-	var left  = Vector2(cell.x, cell.y + 1)
-	var right = Vector2(cell.x, cell.y - 1)
-	var top   = Vector2(cell.x + 1, cell.y)
-	var down  = Vector2(cell.x - 1, cell.y)
-	
-	var results = []
-			
-	for each in [left,right,top,down]:
-		if !visited.has(each):
-			results.append(each)
-	
-	return results
