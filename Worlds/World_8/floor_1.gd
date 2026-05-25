@@ -1,5 +1,14 @@
 extends TileMapLayer
 
+var astar = AStarGrid2D.new()
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	setup_grid()
+	#print(get_movement_route(Vector2i(-5,12),Vector2i(-4,14)))
+	pass
+
+
 func get_cell_data(cell:Vector2):
 	var pos = map_to_local(cell)
 	var elevation = get_cell_tile_data(Vector2(cell)).get_custom_data('Elevation')
@@ -22,22 +31,23 @@ func get_floor_data(only_walkable:bool=false):
 		elif !only_walkable: floor_data.append(cell_data)
 	return floor_data
 
-func get_available_surrounding_cells(cell:Vector2i):
+func get_available_surrounding_cells(cell:Vector2i,outofbound=false):
 	var surr_cells = get_surrounding_cells(cell)
 	var floor_data = get_floor_data()
 	var avaliable_surrounding_cells = []
 	for _cell in floor_data:
-		if surr_cells.has(_cell.cell):				
-			avaliable_surrounding_cells.append(_cell)
+		if surr_cells.has(_cell.cell):
+			if outofbound:
+				if astar.is_in_boundsv(_cell.cell):
+					avaliable_surrounding_cells.append(_cell)
+			else:
+				avaliable_surrounding_cells.append(_cell)
+		
+	
+	
 	return avaliable_surrounding_cells
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	setup_grid()
-	#print(get_movement_route(Vector2i(-5,12),Vector2i(-4,14)))
-	pass
 
-var astar = AStarGrid2D.new()
 func setup_grid():
 	# 1. Define the grid size boundary (Rect2i)
 	astar.region = get_used_rect()
@@ -68,8 +78,6 @@ func setup_grid():
 	astar.update()
 
 func get_movement_route(my_grid_pos: Vector2i, target_grid_pos: Vector2i):
-	# Check if the target is out of bounds or completely solid first
-	setup_grid()
 	if not astar.is_in_bounds(target_grid_pos.x, target_grid_pos.y):
 		return []
 	if astar.is_point_solid(target_grid_pos):
