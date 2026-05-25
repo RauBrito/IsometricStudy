@@ -24,7 +24,7 @@ func get_floor_data(only_walkable:bool=false):
 
 func get_available_surrounding_cells(cell:Vector2i):
 	var surr_cells = get_surrounding_cells(cell)
-	var floor_data = get_floor_data(true)
+	var floor_data = get_floor_data()
 	var avaliable_surrounding_cells = []
 	for _cell in floor_data:
 		if surr_cells.has(_cell.cell):				

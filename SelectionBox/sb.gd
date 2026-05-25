@@ -7,7 +7,7 @@ extends CharacterBody2D
 
 
 
-var cell_pos = Vector2i(-5,12)
+var cell_pos = Vector2i(-2,13)
 var is_movement = false
 
 
@@ -76,8 +76,10 @@ func handle_movement():
 			#future_position.y + (-8*cell_data.elevation))
 		var all_cells = floor_1.get_movement_route(ramsa.my_cell,cell_pos)
 		all_cells.pop_front()
-		ramsa.animate_movement(floor_1,all_cells)
+		if all_cells.size() >= 1:
+			ramsa.animate_movement(floor_1,all_cells)
 		remove_tiles()
+			
 	else:
 		show_move(cell_pos,ramsa.movement)
 
