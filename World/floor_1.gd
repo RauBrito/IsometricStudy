@@ -56,15 +56,6 @@ func get_cell_data(cell:Vector2) ->Cell_Data:
 	var pos = Vector2(cell_pos.x,cell_pos.y + (-8 * elevation))
 	var walkable = get_cell_tile_data(Vector2(cell)).get_custom_data('Walkable')
 	return Cell_Data.new(cell,pos,walkable,elevation)
-	#return {
-			#"cell":cell,
-			#'walkable':get_cell_tile_data(Vector2(cell)).get_custom_data('Walkable'),
-			#'elevation':elevation,
-			#'position':Vector2(
-				#pos.x,
-				#pos.y + (-8 * elevation)
-			#)
-		#}
 
 func get_floor_data(only_walkable:bool=false):
 	var floor_data=[]
