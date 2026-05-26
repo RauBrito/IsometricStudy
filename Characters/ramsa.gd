@@ -3,7 +3,7 @@ extends CharacterBody2D
 @onready var floor_1: TileMapLayer = $"../floor_1"
 @export var movement = 3
 
-@export var my_cell = Vector2i(-3,13)
+@export var my_cell = Vector2i(-5,15)
 
 func _ready():
 	position = floor_1.map_to_local(my_cell)
@@ -12,6 +12,7 @@ func _ready():
 
 func show_movement():
 	var valid_cells = get_valid_movement()
+	valid_cells.reverse()
 	for each in valid_cells:
 		floor_1.create_tile(each)
 
