@@ -1,12 +1,13 @@
 extends CharacterBody2D
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var floor_1: TileMapLayer = $"../floor_1"
-@export var movement = 2
+@export var movement = 3
 
 @export var my_cell = Vector2i(-3,13)
 
 func _ready():
 	position = floor_1.map_to_local(my_cell)
+	floor_1.modify_cell_content(my_cell,self)
 	#show_movement()
 
 func show_movement():
@@ -15,8 +16,10 @@ func show_movement():
 		floor_1.create_tile(each)
 
 func move_to_tile(target_cells:Array[Vector2i],map_layer:TileMapLayer):
+	floor_1.modify_cell_content(my_cell,null)
 	if target_cells.size() < 1:
-		return
+		#floor_1.set_point_solid(my_cell,true)
+		return floor_1.modify_cell_content(my_cell,self)
 	
 	var move_direction = target_cells[0] - my_cell 
 	my_cell = target_cells[0]

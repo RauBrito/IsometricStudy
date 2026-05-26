@@ -7,15 +7,20 @@ class Cell_Data:
 	var position:Vector2
 	var walkable:bool
 	var elevation:int
-	func _init(_cell,_position,_walkable,_elevation) -> void:
+	var content:Variant = null
+	func _init(_cell,_position,_walkable,_elevation,_content=null) -> void:
 		cell     = _cell
 		position = _position
 		walkable = _walkable
 		elevation= _elevation
+		content = _content
+	
+	func set_content(_content:Variant):
+		content = _content
 		
 
 var astar = AStarGrid2D.new()
-
+var all_floor_data:Array[Cell_Data] = []
 func setup_grid():
 	# 1. Define the grid size boundary (Rect2i)
 	astar.region = get_used_rect()
@@ -36,30 +41,46 @@ func setup_grid():
 	astar.default_compute_heuristic = AStarGrid2D.HEURISTIC_MANHATTAN
 	astar.default_estimate_heuristic = AStarGrid2D.HEURISTIC_MANHATTAN
 	
-	#4.5 Set obstacles
-	var all_cells = get_floor_data()
+	# 5. Bake the configuration! (CRITICAL STEP)
 	astar.update()
+	#5.5 Set obstacles
+	var all_cells = get_floor_data_old()
 	for cell in all_cells:
 		if !cell.walkable:
 			#print(cell.cell)
 			astar.set_point_solid(cell.cell, true)
-	# 5. Bake the configuration! (CRITICAL STEP)
-	astar.update()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	setup_grid()
+	all_floor_data = get_floor_data_old()
 	pass
 
 
 func get_cell_data(cell:Vector2) ->Cell_Data:
+	#var result
+	#for each in all_floor_data:
+		#if each.cell == cell:
+			#result = each
+	#return result
 	var cell_pos = map_to_local(cell)
 	var elevation = get_custom_data(cell,'Elevation')
 	var walkable = get_custom_data(cell,'Walkable')
+	var content = null
 	var pos = Vector2(cell_pos.x,cell_pos.y + (-8 * elevation))
-	return Cell_Data.new(cell,pos,walkable,elevation)
+	return Cell_Data.new(cell,pos,walkable,elevation,content)
 
 func get_floor_data(only_walkable:bool=false) -> Array[Cell_Data]:
+	var floor_data:Array[Cell_Data]=[]
+	if only_walkable:
+		for each in all_floor_data:
+			if each.walkable:
+				floor_data.append(each)
+	else:
+		floor_data = all_floor_data
+	return floor_data
+
+func get_floor_data_old(only_walkable:bool=false) -> Array[Cell_Data]:
 	var floor_data:Array[Cell_Data]=[]
 	for cell in get_used_cells():
 		var cell_data:Cell_Data = get_cell_data(cell)
@@ -67,6 +88,7 @@ func get_floor_data(only_walkable:bool=false) -> Array[Cell_Data]:
 			floor_data.append(cell_data)
 		elif !only_walkable: floor_data.append(cell_data)
 	return floor_data
+
 
 func get_available_surrounding_cells(
 	cell:Vector2i,
@@ -122,3 +144,18 @@ func create_tile(cell:Vector2i):
 func remove_tiles():
 	for child in tiles_ctn.get_children():
 		child.queue_free()
+
+func set_point_solid(cell: Vector2i, solid: bool = true):
+	astar.set_point_solid(cell,solid)
+
+func modify_cell_content(cell:Vector2i,content:Variant):
+	for each in all_floor_data:
+		if each.cell == cell:
+			each.set_content(content)
+
+func test(cell):
+	var result
+	for each in all_floor_data:
+		if each.cell == cell:
+			result = each
+	return result

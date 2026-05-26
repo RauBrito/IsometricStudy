@@ -19,8 +19,9 @@ func _input(event):
 	if event.is_action_pressed("right"): 
 		move(16,8)
 	if event.is_action_pressed("selection"): 
-		handle_movement()
+		selection()
 	if event.is_action_pressed("deselection"): 
+		is_movement = false
 		floor_1.remove_tiles()
 
 func move(x:int,y:int):
@@ -61,8 +62,12 @@ func handle_movement():
 		
 			
 	else:
-		is_movement = true
-		ramsa.show_movement()
+		if floor_1.test(cell_pos).content is CharacterBody2D:
+			is_movement = true
+			ramsa.show_movement()
 
-
-#TODO: Only show tiles when ramsa is selected
+func selection():
+	handle_movement()
+		
+		
+#TODO: Fix the duplication of "get_floor_data"
