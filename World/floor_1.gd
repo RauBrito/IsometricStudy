@@ -49,7 +49,6 @@ func setup_grid():
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	setup_grid()
-	#print(get_movement_route(Vector2i(-5,12),Vector2i(-4,14)))
 	pass
 
 
@@ -68,16 +67,6 @@ func get_floor_data(only_walkable:bool=false) -> Array[Cell_Data]:
 			floor_data.append(cell_data)
 		elif !only_walkable: floor_data.append(cell_data)
 	return floor_data
-
-func get_available_surrounding_cells_data(cell:Vector2i) -> Array[Cell_Data]:
-	var surr_cells:Array[Vector2i] = get_surrounding_cells(cell)
-	var floor_data:Array[Cell_Data] = get_floor_data()
-	var avaliable_surrounding_cells:Array[Cell_Data] = []
-	for _cell in floor_data:
-		if surr_cells.has(_cell.cell):
-			avaliable_surrounding_cells.append(_cell)
-		
-	return avaliable_surrounding_cells
 
 func get_available_surrounding_cells(
 	cell:Vector2i,
@@ -102,7 +91,6 @@ func get_available_surrounding_cells(
 	
 	
 	return avaliable_surrounding_cells
-
 
 func get_movement_route(my_grid_pos: Vector2i, target_grid_pos: Vector2i):
 	if not astar.is_in_bounds(target_grid_pos.x, target_grid_pos.y):

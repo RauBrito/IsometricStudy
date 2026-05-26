@@ -9,6 +9,20 @@ func _ready():
 	position = floor_1.map_to_local(cell_pos)
 	pass
 
+func _input(event):
+	if event.is_action_pressed("up"): 
+		move(16,-8)
+	if event.is_action_pressed("down"): 
+		move(-16,8)
+	if event.is_action_pressed("left"): 
+		move(-16,-8)
+	if event.is_action_pressed("right"): 
+		move(16,8)
+	if event.is_action_pressed("selection"): 
+		handle_movement()
+	if event.is_action_pressed("deselection"): 
+		floor_1.remove_tiles()
+
 func move(x:int,y:int):
 	# Get plain position from registered cell (x,y)
 	var plain_pos = floor_1.map_to_local(cell_pos)
@@ -33,19 +47,6 @@ func move(x:int,y:int):
 		plain_future_pos.y + (-8*future_cell_data.elevation)
 	)
 
-func _input(event):
-	if event.is_action_pressed("up"): 
-		move(16,-8)
-	if event.is_action_pressed("down"): 
-		move(-16,8)
-	if event.is_action_pressed("left"): 
-		move(-16,-8)
-	if event.is_action_pressed("right"): 
-		move(16,8)
-	if event.is_action_pressed("selection"): 
-		handle_movement()
-	if event.is_action_pressed("deselection"): 
-		floor_1.remove_tiles()
 
 func handle_movement():
 	if is_movement:
