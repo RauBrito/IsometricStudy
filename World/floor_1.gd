@@ -38,9 +38,10 @@ func setup_grid():
 	
 	#4.5 Set obstacles
 	var all_cells = get_floor_data()
+	astar.update()
 	for cell in all_cells:
 		if !cell.walkable:
-			print(cell.cell)
+			#print(cell.cell)
 			astar.set_point_solid(cell.cell, true)
 	# 5. Bake the configuration! (CRITICAL STEP)
 	astar.update()
@@ -68,17 +69,35 @@ func get_floor_data(only_walkable:bool=false) -> Array[Cell_Data]:
 		elif !only_walkable: floor_data.append(cell_data)
 	return floor_data
 
-func get_available_surrounding_cells(cell:Vector2i,visited:Array[Vector2i]=[],outofbound=false):
-	var surr_cells = get_surrounding_cells(cell)
-	var floor_data = get_floor_data()
-	var avaliable_surrounding_cells = []
+func get_available_surrounding_cells_data(cell:Vector2i) -> Array[Cell_Data]:
+	var surr_cells:Array[Vector2i] = get_surrounding_cells(cell)
+	var floor_data:Array[Cell_Data] = get_floor_data()
+	var avaliable_surrounding_cells:Array[Cell_Data] = []
 	for _cell in floor_data:
 		if surr_cells.has(_cell.cell):
-			if outofbound:
-				if astar.is_in_boundsv(_cell.cell):
-					avaliable_surrounding_cells.append(_cell)
-			else:
-				avaliable_surrounding_cells.append(_cell)
+			avaliable_surrounding_cells.append(_cell)
+		
+	return avaliable_surrounding_cells
+
+func get_available_surrounding_cells(
+	cell:Vector2i,
+	to_ignore:Array[Vector2i]=[],
+	walkable:bool=false) -> Array[Vector2i]:
+	var surr_cells:Array[Vector2i] = get_surrounding_cells(cell)
+	var floor_data:Array[Cell_Data] = get_floor_data(walkable)
+	var avaliable_surrounding_cells:Array[Vector2i] = []
+	
+	var index_to_remove = []
+	for i in surr_cells.size():
+		if to_ignore.has(surr_cells[i]):
+			index_to_remove.append(i)
+	index_to_remove.sort_custom(func(a, b): return a > b)
+	for i in index_to_remove:
+		surr_cells.remove_at(i)
+
+	for _cell in floor_data:
+		if surr_cells.has(_cell.cell):
+			avaliable_surrounding_cells.append(_cell.cell)
 		
 	
 	

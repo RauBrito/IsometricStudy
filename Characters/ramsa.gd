@@ -1,19 +1,18 @@
 extends CharacterBody2D
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var floor_1: TileMapLayer = $"../floor_1"
-@export var movement = 3
+@export var movement = 2
 
-@export var my_cell = Vector2i(-2,13)
+@export var my_cell = Vector2i(-3,13)
 
 func _ready():
 	position = floor_1.map_to_local(my_cell)
+	#show_movement()
 
-func animate_movement(map_layer:TileMapLayer,target_cells:Array[Vector2i]=[]):
-#func animate_movement(target_cell:Vector2i,map_layer:TileMapLayer):
-
-	move_to_tile(target_cells,map_layer)
-	
-	pass
+func show_movement():
+	var valid_cells = get_valid_movement()
+	for each in valid_cells:
+		floor_1.create_tile(each)
 
 func move_to_tile(target_cells:Array[Vector2i],map_layer:TileMapLayer):
 	if target_cells.size() < 1:
@@ -32,12 +31,11 @@ func move_to_tile(target_cells:Array[Vector2i],map_layer:TileMapLayer):
 	tween.tween_property(self, "position", target_data.position, 0.5)
 	target_cells.pop_front()
 	tween.tween_callback(move_to_tile.bind(target_cells,map_layer))
-	pass
 
 func move_down():
 	animated_sprite_2d.flip_h = false
 	animated_sprite_2d.play("Face")
-	
+
 func move_up():
 	animated_sprite_2d.flip_h = true
 	animated_sprite_2d.play("Back")
@@ -45,19 +43,31 @@ func move_up():
 func move_left():
 	animated_sprite_2d.flip_h = false
 	animated_sprite_2d.play("Back")
-	
+
 func move_right():
 	animated_sprite_2d.flip_h = true
 	animated_sprite_2d.play("Face")
 
-func show_movement():
-	floor_1.remove_tiles()
-	var all_tiles = retrieve_movement_tiles(cell,amount)
-	var floor_data = floor_1.get_floor_data(true)
-	var valid_cells = [cell_pos]
-	for each in floor_data:
-		if all_tiles.has(each.cell):
-			valid_cells.append(each.cell)
+func remove_duplicates(arr) ->Array[Vector2i]:
+	var unique:Array[Vector2i] = []
+	for item in arr:
+		if not unique.has(item):
+			unique.append(item)
+	return unique
+
+func get_valid_movement()->Array[Vector2i]:
+	#Valid cells to keep track of our progress
+	var valid_cells:Array[Vector2i] = []
+	#A queue to know the last cells we visited
+	var queue:Array[Vector2i] = [my_cell]
+	for i in movement:
+		#Add our progress to the valid cells and allow to start the journey with "my_cell"
+		valid_cells.append_array(queue)
+		#For each cell in the queue, we add the next targets "to_queue" and restart
+		var to_queue:Array[Vector2i] = []
+		for each in queue:
+			to_queue.append_array(floor_1.get_available_surrounding_cells(each,valid_cells,true))
+		queue = remove_duplicates(to_queue) 
 	
-	for each in valid_cells:
-		floor_1.create_tile(each)
+	valid_cells.append_array(queue)
+	return valid_cells
