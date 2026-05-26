@@ -49,3 +49,15 @@ func move_left():
 func move_right():
 	animated_sprite_2d.flip_h = true
 	animated_sprite_2d.play("Face")
+
+func show_movement():
+	floor_1.remove_tiles()
+	var all_tiles = retrieve_movement_tiles(cell,amount)
+	var floor_data = floor_1.get_floor_data(true)
+	var valid_cells = [cell_pos]
+	for each in floor_data:
+		if all_tiles.has(each.cell):
+			valid_cells.append(each.cell)
+	
+	for each in valid_cells:
+		floor_1.create_tile(each)

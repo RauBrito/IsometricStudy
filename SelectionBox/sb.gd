@@ -1,19 +1,16 @@
 extends CharacterBody2D
 @onready var floor_1: TileMapLayer = $"../floor_1"
-@onready var tiles_ctn: Node2D = $"../Tiles_ctn"
-@onready var MOVE_TILE = preload("uid://bhsujomjfipsm")
 @onready var ramsa: CharacterBody2D = $"../Ramsa"
 
 
 
-
+var is_movement = true
 var cell_pos = Vector2i(-2,13)
-var is_movement = false
 
 
 func _ready():
 	position = floor_1.map_to_local(cell_pos)
-	#ramsa.animate_movement(floor_1)
+	ramsa.show_movement()
 	
 	
 	#var movements = floor_1.get_movement_route(Vector2i(-5,12),Vector2i(-4,14))
@@ -64,54 +61,16 @@ func _input(event):
 	if event.is_action_pressed("selection"): 
 		handle_movement()
 	if event.is_action_pressed("deselection"): 
-		remove_tiles()
+		floor_1.remove_tiles()
 
 # ALL MOVEMENT LOGIC
 func handle_movement():
 	if is_movement:
-		#var cell_data = floor_1.get_cell_data(cell_pos)
-		#var future_position = floor_1.map_to_local(cell_pos)
-		#ramsa.position = Vector2(
-			#future_position.x,
-			#future_position.y + (-8*cell_data.elevation))
 		var all_cells = floor_1.get_movement_route(ramsa.my_cell,cell_pos)
 		all_cells.pop_front()
 		if all_cells.size() >= 1:
 			ramsa.animate_movement(floor_1,all_cells)
-		remove_tiles()
+		floor_1.remove_tiles()
 			
 	else:
-		show_move(cell_pos,ramsa.movement)
-
-func show_move(cell:Vector2i,amount:int):
-	pass
-	#remove_tiles()
-	#is_movement = true
-	#var all_tiles = retrieve_movement_tiles(cell,amount)
-	#var floor_data = floor_1.get_floor_data(true)
-	#var valid_cells = [cell_pos]
-	#for each in floor_data:
-		#if all_tiles.has(each.cell):
-			#valid_cells.append(each.cell)
-	#
-	#for each in valid_cells:
-		#create_tile(each)
-
-func create_tile(cell:Vector2i):
-	var new_instance = MOVE_TILE.instantiate()
-	tiles_ctn.add_child(new_instance)
-	
-	var cell_data = floor_1.get_cell_data(cell)
-	var basic_position = floor_1.map_to_local(cell)
-	var future_position = Vector2(
-		basic_position.x,
-		basic_position.y + (-8*cell_data.elevation)
-	)
-	
-	new_instance.global_position = future_position
-	pass
-
-func remove_tiles():
-	is_movement = false
-	for child in tiles_ctn.get_children():
-		child.queue_free()
+		ramsa.show_move(cell_pos,ramsa.movement)

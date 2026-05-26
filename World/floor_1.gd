@@ -1,4 +1,6 @@
 extends TileMapLayer
+@onready var tiles_ctn: Node2D = $"../Tiles_ctn"
+@onready var MOVE_TILE = preload("uid://bhsujomjfipsm")
 
 class Cell_Data:
 	var cell:Vector2i
@@ -52,21 +54,21 @@ func _ready() -> void:
 
 func get_cell_data(cell:Vector2) ->Cell_Data:
 	var cell_pos = map_to_local(cell)
-	var elevation = get_cell_tile_data(Vector2(cell)).get_custom_data('Elevation')
+	var elevation = get_custom_data(cell,'Elevation')
+	var walkable = get_custom_data(cell,'Walkable')
 	var pos = Vector2(cell_pos.x,cell_pos.y + (-8 * elevation))
-	var walkable = get_cell_tile_data(Vector2(cell)).get_custom_data('Walkable')
 	return Cell_Data.new(cell,pos,walkable,elevation)
 
-func get_floor_data(only_walkable:bool=false):
-	var floor_data=[]
+func get_floor_data(only_walkable:bool=false) -> Array[Cell_Data]:
+	var floor_data:Array[Cell_Data]=[]
 	for cell in get_used_cells():
-		var cell_data = get_cell_data(cell)
-		if only_walkable && get_cell_tile_data(Vector2(cell)).get_custom_data('Walkable'):
+		var cell_data:Cell_Data = get_cell_data(cell)
+		if only_walkable && cell_data.walkable:
 			floor_data.append(cell_data)
 		elif !only_walkable: floor_data.append(cell_data)
 	return floor_data
 
-func get_available_surrounding_cells(cell:Vector2i,outofbound=false):
+func get_available_surrounding_cells(cell:Vector2i,visited:Array[Vector2i]=[],outofbound=false):
 	var surr_cells = get_surrounding_cells(cell)
 	var floor_data = get_floor_data()
 	var avaliable_surrounding_cells = []
@@ -92,3 +94,24 @@ func get_movement_route(my_grid_pos: Vector2i, target_grid_pos: Vector2i):
 	# Get clean grid index array paths
 	var grid_path: Array[Vector2i] = astar.get_id_path(my_grid_pos, target_grid_pos)
 	return grid_path
+
+func get_custom_data(cell:Vector2i,var_name:String):
+	return get_cell_tile_data(cell).get_custom_data(var_name)
+
+func create_tile(cell:Vector2i):
+	var new_instance = MOVE_TILE.instantiate()
+	tiles_ctn.add_child(new_instance)
+	
+	var cell_data = get_cell_data(cell)
+	var basic_position = map_to_local(cell)
+	var future_position = Vector2(
+		basic_position.x,
+		basic_position.y + (-8*cell_data.elevation)
+	)
+	
+	new_instance.global_position = future_position
+	pass
+
+func remove_tiles():
+	for child in tiles_ctn.get_children():
+		child.queue_free()
