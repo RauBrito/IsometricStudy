@@ -54,6 +54,7 @@ func setup_grid():
 func _ready() -> void:
 	setup_grid()
 	all_floor_data = get_floor_data_old()
+	apply_index()
 	pass
 
 
@@ -137,7 +138,6 @@ func create_tile(cell:Vector2i):
 		basic_position.x,
 		basic_position.y + (-8*cell_data.elevation)
 	)
-	
 	new_instance.global_position = future_position
 	pass
 
@@ -159,3 +159,10 @@ func test(cell):
 		if each.cell == cell:
 			result = each
 	return result
+
+
+func apply_index():
+	var every_cells = get_used_cells()
+	
+	for each in every_cells:
+		var c = get_cell_tile_data(each)

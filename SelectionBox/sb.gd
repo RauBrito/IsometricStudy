@@ -3,7 +3,7 @@ extends CharacterBody2D
 @onready var ramsa: CharacterBody2D = $"../Ramsa"
 
 var is_movement = false
-var cell_pos = Vector2i(-5,15)
+var cell_pos = Vector2i(-4,16)
 
 func _ready():
 	position = floor_1.map_to_local(cell_pos)

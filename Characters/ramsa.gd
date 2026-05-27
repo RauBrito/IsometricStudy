@@ -1,9 +1,8 @@
 extends CharacterBody2D
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var floor_1: TileMapLayer = $"../floor_1"
-@export var movement = 3
-
-@export var my_cell = Vector2i(-5,15)
+@export var movement = 7
+@export var my_cell = Vector2i(-4,16)
 
 func _ready():
 	position = floor_1.map_to_local(my_cell)
