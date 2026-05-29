@@ -70,7 +70,9 @@ size = Vector2(16, 30)
 [node name="Node2D" type="CharacterBody2D" unique_id=1972412629]
 script = ExtResource("1_l2dba")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=174017421]
+[node name="Visual" type="Node2D" parent="." unique_id=1217345888]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Visual" unique_id=174017421]
 position = Vector2(0, -11)
 sprite_frames = SubResource("SpriteFrames_l7ijt")
 animation = &"Face"

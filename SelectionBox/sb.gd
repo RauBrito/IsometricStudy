@@ -1,9 +1,11 @@
 extends CharacterBody2D
 @onready var floor_1: TileMapLayer = $"../floor_1"
 @onready var ramsa: CharacterBody2D = $"../Ramsa"
+@onready var visual: Node2D = $Visual
+@onready var animated_sprite_2d: AnimatedSprite2D = $Visual/AnimatedSprite2D
 
 var is_movement = false
-var cell_pos = Vector2i(-4,16)
+var cell_pos = Vector2i(17,5)
 
 func _ready():
 	position = floor_1.map_to_local(cell_pos)
@@ -45,8 +47,10 @@ func move(x:int,y:int):
 	var future_cell_data = floor_1.get_cell_data(future_cell)
 	position = Vector2(
 		plain_future_pos.x,
-		plain_future_pos.y + (-8*future_cell_data.elevation)
+		plain_future_pos.y
+		#plain_future_pos.y + (-8*future_cell_data.elevation)
 	)
+	offset_elevation(future_cell_data.elevation)
 
 
 func handle_movement():
@@ -69,6 +73,9 @@ func handle_movement():
 func selection():
 	handle_movement()
 		
-		
+
+func offset_elevation(amount:int):
+	animated_sprite_2d.offset.y = amount * -8
+
 #TODO: Fix the duplication of "get_floor_data"
 #FIXME: Tiles and selection box index by elevation

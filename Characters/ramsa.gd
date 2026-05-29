@@ -1,8 +1,8 @@
 extends CharacterBody2D
-@onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
+@onready var animated_sprite_2d: AnimatedSprite2D = $Visual/AnimatedSprite2D
 @onready var floor_1: TileMapLayer = $"../floor_1"
 @export var movement = 7
-@export var my_cell = Vector2i(-4,16)
+@export var my_cell = Vector2i(17,5)
 
 func _ready():
 	position = floor_1.map_to_local(my_cell)
@@ -32,22 +32,23 @@ func move_to_tile(target_cells:Array[Vector2i],map_layer:TileMapLayer):
 	var tween = create_tween()
 	var target_data = map_layer.get_cell_data(target_cells[0])
 	tween.tween_property(self, "position", target_data.position, 0.5)
+	tween.parallel().tween_property(animated_sprite_2d, "offset", Vector2(0,target_data.elevation*-8), 0.5)
 	target_cells.pop_front()
 	tween.tween_callback(move_to_tile.bind(target_cells,map_layer))
 
-func move_down():
+func move_right():
 	animated_sprite_2d.flip_h = false
 	animated_sprite_2d.play("Face")
 
-func move_up():
+func move_left():
 	animated_sprite_2d.flip_h = true
 	animated_sprite_2d.play("Back")
 
-func move_left():
+func move_down():
 	animated_sprite_2d.flip_h = false
 	animated_sprite_2d.play("Back")
 
-func move_right():
+func move_up():
 	animated_sprite_2d.flip_h = true
 	animated_sprite_2d.play("Face")
 
