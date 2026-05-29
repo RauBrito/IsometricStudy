@@ -2,8 +2,70 @@
 
 [ext_resource type="Texture2D" uid="uid://dmbcnntyrxouu" path="res://Assets/iso_tile_export.png" id="1_yksbe"]
 [ext_resource type="Script" uid="uid://devrtq0o5xnv0" path="res://World/floor_1.gd" id="2_cch3j"]
+[ext_resource type="Texture2D" uid="uid://dlgql61ujkoej" path="res://Assets/SELECT BOX.png" id="3_k8do8"]
 [ext_resource type="PackedScene" uid="uid://b8x1u0jx8fnjb" path="res://SelectionBox/selection_box.tscn" id="3_paxgx"]
 [ext_resource type="PackedScene" uid="uid://cltqn0rc00v8d" path="res://Characters/Ramsa.tscn" id="5_kjrp3"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_bkhv4"]
+vertices = PackedVector2Array(16, 0, 0, 8, -16, 0, 0, -8)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(0, -8, -16, 0, 0, 8, 16, 0)])
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_k8do8"]
+vertices = PackedVector2Array(16, -8, 0, 0, -16, -8, 0, -16)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(0, -16, -16, -8, 0, 0, 16, -8)])
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_yf0ba"]
+vertices = PackedVector2Array(16, -16, 0, -8, -16, -16, 0, -24)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(0, -8, -16, -16, 0, -24, 16, -16)])
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_eidgh"]
+vertices = PackedVector2Array(16, -24, 0, -16, -16, -24, 0, -32)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(0, -32, -16, -24, 0, -16, 16, -24)])
+agent_radius = 0.0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w47uh"]
+texture = ExtResource("3_k8do8")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/modulate = Color(0, 1, 1, 0)
+0:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_bkhv4")
+0:0/0/custom_data_0 = true
+1:0/0 = 0
+1:0/0/texture_origin = Vector2i(0, 8)
+1:0/0/modulate = Color(0, 1, 1, 0)
+1:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_k8do8")
+1:0/0/custom_data_0 = true
+1:0/0/custom_data_1 = 1
+2:0/0 = 0
+2:0/0/texture_origin = Vector2i(0, 16)
+2:0/0/modulate = Color(0, 1, 1, 0)
+2:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_yf0ba")
+2:0/0/custom_data_0 = true
+2:0/0/custom_data_1 = 2
+3:0/0 = 0
+3:0/0/texture_origin = Vector2i(0, 24)
+3:0/0/modulate = Color(0, 1, 1, 0)
+3:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_eidgh")
+3:0/0/custom_data_0 = true
+3:0/0/custom_data_1 = 3
+
+[sub_resource type="TileSet" id="TileSet_lo5ox"]
+tile_shape = 1
+tile_layout = 5
+tile_size = Vector2i(32, 16)
+navigation_layer_0/layers = 1
+custom_data_layer_0/name = "Walkable"
+custom_data_layer_0/type = 1
+custom_data_layer_1/name = "Elevation"
+custom_data_layer_1/type = 2
+sources/0 = SubResource("TileSetAtlasSource_w47uh")
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_s2gog"]
 vertices = PackedVector2Array(16, -16, 0, -8, -16, -16, 0, -24)
@@ -56,8 +118,11 @@ texture_region_size = Vector2i(32, 32)
 7:1/0/texture_origin = Vector2i(0, -8)
 8:1/0 = 0
 8:1/0/texture_origin = Vector2i(0, -8)
+8:1/0/custom_data_0 = true
 9:1/0 = 0
-9:1/0/texture_origin = Vector2i(0, -8)
+9:1/0/y_sort_origin = -8
+9:1/0/custom_data_0 = true
+9:1/0/custom_data_1 = 1
 10:1/0 = 0
 10:1/0/texture_origin = Vector2i(0, -8)
 11:1/0 = 0
@@ -135,7 +200,9 @@ texture_region_size = Vector2i(32, 32)
 5:3/0 = 0
 5:3/0/texture_origin = Vector2i(0, -8)
 6:3/0 = 0
-6:3/0/texture_origin = Vector2i(0, -8)
+6:3/0/texture_origin = Vector2i(0, 8)
+6:3/0/custom_data_0 = true
+6:3/0/custom_data_1 = 2
 7:3/0 = 0
 7:3/0/texture_origin = Vector2i(0, -8)
 8:3/0 = 0
@@ -174,6 +241,7 @@ texture_region_size = Vector2i(32, 32)
 15:4/0 = 0
 0:5/0 = 0
 0:5/0/texture_origin = Vector2i(0, -8)
+0:5/0/custom_data_0 = true
 1:5/0 = 0
 1:5/0/texture_origin = Vector2i(0, -8)
 2:5/0 = 0
@@ -327,7 +395,7 @@ texture_region_size = Vector2i(32, 32)
 
 [sub_resource type="TileSet" id="TileSet_wnioq"]
 tile_shape = 1
-tile_layout = 4
+tile_layout = 5
 tile_size = Vector2i(32, 16)
 terrain_set_0/mode = 0
 terrain_set_0/terrain_0/name = "Mud"
@@ -342,23 +410,36 @@ custom_data_layer_1/type = 2
 sources/0 = SubResource("TileSetAtlasSource_befpb")
 
 [node name="Node2D" type="Node2D" unique_id=1145499543]
+z_as_relative = false
+y_sort_enabled = true
+
+[node name="Ground_layer" type="TileMapLayer" parent="." unique_id=121234247]
+visible = false
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AAASAAQAAAAAAAAAAAASAAMAAAAAAAAAAAASAAIAAAAAAAAAAAASAAEAAAAAAAAAAAASAAAAAAAAAAAAAAASAP//AAAAAAAAAAASAP7/AAAAAAAAAAATAP7/AAAAAAAAAAAUAP7/AAAAAAAAAAAVAP7/AAAAAAAAAAAWAP7/AAAAAAAAAAAXAP7/AAAAAAAAAAAYAP7/AAAAAAAAAAAYAP//AAAAAAAAAAAYAAAAAAAAAAAAAAAYAAEAAAAAAAAAAAAYAAIAAAAAAAAAAAAYAAMAAAAAAAAAAAAYAAQAAAAAAAAAAAAXAAQAAAAAAAAAAAAWAAQAAAAAAAAAAAAVAAQAAAAAAAAAAAAUAAQAAAAAAAAAAAATAAQAAAAAAAAAAAAXAAMAAAABAAAAAAAXAAIAAAABAAAAAAAXAAEAAAABAAAAAAAXAAAAAAABAAAAAAAXAP//AAABAAAAAAAWAP//AAABAAAAAAAVAP//AAABAAAAAAAUAP//AAABAAAAAAATAP//AAABAAAAAAATAAAAAAABAAAAAAATAAEAAAABAAAAAAATAAIAAAABAAAAAAATAAMAAAABAAAAAAAUAAMAAAABAAAAAAAVAAMAAAABAAAAAAAWAAMAAAABAAAAAAAWAAIAAAACAAAAAAAWAAEAAAACAAAAAAAVAAEAAAACAAAAAAAVAAAAAAACAAAAAAAWAAAAAAACAAAAAAAUAAAAAAACAAAAAAAUAAEAAAACAAAAAAAUAAIAAAACAAAAAAAVAAIAAAACAAAAAAA=")
+tile_set = SubResource("TileSet_lo5ox")
+navigation_visibility_mode = 1
+script = ExtResource("2_cch3j")
 
 [node name="floor_1" type="TileMapLayer" parent="." unique_id=332532058]
+z_as_relative = false
 y_sort_enabled = true
-tile_map_data = PackedByteArray("AAD9/w0AAAAIAAkAAAD9/w4AAAAPAAQAAAD+/w0AAAAIAAkAAAD+/w4AAAAIAAkAAAD+/w8AAAAIAAkAAAD9/w8AAAAIAAkAAAD8/w8AAAAIAAkAAAD8/w4AAAAIAAkAAAD8/w0AAAAIAAkAAAD8/wwAAAAPAAQAAAD9/wwAAAAIAAkAAAD+/wwAAAAIAAkAAAD//wwAAAAPAAQAAAD//w0AAAAIAAkAAAD//w4AAAAIAAkAAAD//w8AAAAPAAQAAAD//xAAAAAIAAkAAAD+/xAAAAAIAAkAAAD9/xAAAAAIAAkAAAD8/xAAAAAPAAQAAAD7/xAAAAAIAAkAAAD7/w8AAAAPAAQAAAD7/w4AAAAIAAkAAAD7/w0AAAAIAAkAAAD7/wwAAAAIAAkAAAD6/wsAAAAJAAkAAAD7/wsAAAAJAAkAAAD8/wsAAAAJAAkAAAD9/wsAAAAJAAkAAAD+/wsAAAAJAAkAAAD//wsAAAAJAAkAAAAAAAsAAAAJAAkAAAAAAAwAAAAJAAkAAAAAAA0AAAAJAAkAAAAAAA4AAAAJAAkAAAAAAA8AAAAJAAkAAAAAABAAAAAJAAkAAAAAABEAAAAJAAkAAAD6/woAAAAKAAkAAAD7/woAAAAKAAkAAAD8/woAAAAKAAkAAAD9/woAAAAKAAkAAAD+/woAAAAKAAkAAAD//woAAAAKAAkAAAAAAAoAAAAKAAkAAAABAAoAAAAKAAkAAAABAAsAAAAKAAkAAAABAAwAAAAKAAkAAAABAA0AAAAKAAkAAAABAA4AAAAKAAkAAAABAA8AAAAKAAkAAAABABAAAAAKAAkAAAABABEAAAAKAAkAAAA=")
+tile_map_data = PackedByteArray("AAASAP7/AAAAAAUAAAASAP//AAAAAAUAAAASAAAAAAAAAAUAAAASAAEAAAAAAAUAAAASAAIAAAAAAAUAAAASAAMAAAAAAAUAAAATAP7/AAAAAAUAAAAUAP7/AAAAAAUAAAAVAP7/AAAAAAUAAAAWAP7/AAAAAAUAAAAXAP7/AAAAAAUAAAAYAP7/AAAAAAUAAAAYAP//AAAAAAUAAAAYAAAAAAAAAAUAAAAYAAEAAAAAAAUAAAAYAAIAAAAAAAUAAAAYAAMAAAAAAAUAAAASAAQAAAAAAAUAAAATAAQAAAAAAAUAAAAUAAQAAAAAAAUAAAAVAAQAAAAAAAUAAAAWAAQAAAAAAAUAAAAXAAQAAAAAAAUAAAAYAAQAAAAAAAUAAAAXAAMAAAAJAAEAAAAXAAIAAAAJAAEAAAAXAAEAAAAJAAEAAAAXAAAAAAAJAAEAAAAXAP//AAAJAAEAAAAWAP//AAAJAAEAAAAVAP//AAAJAAEAAAAUAP//AAAJAAEAAAATAP//AAAJAAEAAAATAAAAAAAJAAEAAAATAAEAAAAJAAEAAAATAAIAAAAJAAEAAAATAAMAAAAJAAEAAAAUAAMAAAAJAAEAAAAVAAMAAAAJAAEAAAAWAAMAAAAJAAEAAAAVAAEAAAAGAAMAAAAVAAAAAAAGAAMAAAAUAAAAAAAGAAMAAAAUAAEAAAAGAAMAAAAUAAIAAAAGAAMAAAAVAAIAAAAGAAMAAAAWAAIAAAAGAAMAAAAWAAEAAAAGAAMAAAAWAAAAAAAGAAMAAAA=")
 tile_set = SubResource("TileSet_wnioq")
 navigation_enabled = false
 navigation_visibility_mode = 1
 script = ExtResource("2_cch3j")
-
-[node name="floor_2" type="TileMapLayer" parent="." unique_id=1296419316]
-visible = false
-y_sort_enabled = true
-tile_map_data = PackedByteArray("AAD+/xMAAAAIAAkAAAD//xAAAAAEAAQAAAD//xEAAAAAAAQAAAD//xIAAAAIAAkAAAAAAA8AAAAEAAQAAAAAABAAAAAEAAYAAAAAABEAAAAEAAQAAAAAABIAAAAAAAQAAAABAA8AAAAEAAYAAAABABAAAAAAAAYAAAABABEAAAAEAAYAAAABABIAAAAEAAQAAAACAA8AAAAAAAYAAAACABAAAAAMAAUAAAACABEAAAAAAAYAAAACABIAAAAEAAYAAAACABMAAAAEAAQAAAACABQAAAAAAAQAAAADAA8AAAAEAAYAAAADABAAAAAAAAYAAAADABEAAAAEAAYAAAADABIAAAAEAAQAAAADABMAAAAAAAQAAAADABQAAAAIAAkAAAD+/xAAAAAAAAQAAAD+/xEAAAAIAAkAAAD+/xIAAAAIAAkAAAAAAAwAAAAIAAkAAAAAAA0AAAAIAAkAAAAAAA4AAAAAAAQAAAABAAwAAAAIAAkAAAABAA0AAAAAAAQAAAABAA4AAAAEAAQAAAACAAwAAAAAAAQAAAACAA0AAAAEAAQAAAACAA4AAAAEAAYAAAADAAwAAAAIAAkAAAADAA0AAAAAAAQAAAADAA4AAAAEAAQAAAAEAAwAAAAIAAkAAAAEAA0AAAAIAAkAAAAEAA8AAAAEAAQAAAAEABAAAAAEAAYAAAAEABEAAAAEAAQAAAAEABIAAAAAAAQAAAD//xMAAAAIAAkAAAAAABMAAAAIAAkAAAABABMAAAAAAAQAAAABABQAAAAIAAkAAAAAABQAAAAIAAkAAAD//xQAAAAIAAkAAAD+/xQAAAAIAAkAAAD//wwAAAAIAAkAAAD+/w4AAAAIAAkAAAD+/w8AAAAIAAkAAAD//w0AAAAIAAkAAAD//w4AAAAIAAkAAAD//w8AAAAAAAQAAAAEABMAAAAIAAkAAAAEABQAAAAIAAkAAAAFAAwAAAAIAAkAAAAFAA0AAAAIAAkAAAAFAA4AAAAIAAkAAAAFAA8AAAAAAAQAAAAFABAAAAAEAAQAAAAFABEAAAAAAAQAAAAFABIAAAAIAAkAAAAFABMAAAAIAAkAAAAFABQAAAAIAAkAAAAGAAwAAAAIAAkAAAAGAA0AAAAIAAkAAAAGAA4AAAAIAAkAAAAGAA8AAAAIAAkAAAAGABAAAAAAAAQAAAAGABEAAAAIAAkAAAAGABIAAAAIAAkAAAAGABMAAAAIAAkAAAAGABQAAAAIAAkAAAD+/wwAAAAIAAkAAAD+/w0AAAAIAAkAAAD9/wsAAAAIAAkAAAD+/wsAAAAIAAkAAAD//wsAAAAIAAkAAAAAAAsAAAAIAAkAAAABAAsAAAAIAAkAAAACAAsAAAAIAAkAAAADAAsAAAAIAAkAAAAEAAsAAAAIAAkAAAAFAAsAAAAIAAkAAAAGAAsAAAAIAAkAAAAHAAsAAAAIAAkAAAAHAAwAAAAIAAkAAAAHAA0AAAAIAAkAAAAHAA4AAAAIAAkAAAAHAA8AAAAIAAkAAAAHABAAAAAIAAkAAAAHABEAAAAIAAkAAAAHABIAAAAIAAkAAAAHABMAAAAIAAkAAAAHABQAAAAIAAkAAAAHABUAAAAIAAkAAAD9/xUAAAAIAAkAAAD+/xUAAAAIAAkAAAD//xUAAAAIAAkAAAAAABUAAAAIAAkAAAABABUAAAAIAAkAAAACABUAAAAIAAkAAAADABUAAAAIAAkAAAAEABUAAAAIAAkAAAAFABUAAAAIAAkAAAAGABUAAAAIAAkAAAD9/wwAAAAIAAkAAAD9/w0AAAAIAAkAAAD9/w4AAAAIAAkAAAD9/w8AAAAIAAkAAAD9/xAAAAAIAAkAAAD9/xEAAAAIAAkAAAD9/xIAAAAIAAkAAAD9/xMAAAAIAAkAAAD9/xQAAAAIAAkAAAAEAA4AAAAAAAQAAAA=")
-tile_set = SubResource("TileSet_wnioq")
-
-[node name="Tiles_ctn" type="Node2D" parent="." unique_id=1747206076]
+metadata/_edit_lock_ = true
 
 [node name="Selection Box" parent="." unique_id=748368509 instance=ExtResource("3_paxgx")]
+position = Vector2(256, 176)
+
+[node name="Selection Box2" parent="." unique_id=35577930 instance=ExtResource("3_paxgx")]
+position = Vector2(401, 176)
 
 [node name="Ramsa" parent="." unique_id=1972412629 instance=ExtResource("5_kjrp3")]
+visible = false
+position = Vector2(258, 175)
+
+[node name="Tiles_ctn" type="Node2D" parent="." unique_id=1747206076]
+y_sort_enabled = true

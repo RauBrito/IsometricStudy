@@ -68,6 +68,8 @@ animations = [{
 size = Vector2(16, 30)
 
 [node name="Node2D" type="CharacterBody2D" unique_id=1972412629]
+z_as_relative = false
+y_sort_enabled = true
 script = ExtResource("1_l2dba")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=174017421]

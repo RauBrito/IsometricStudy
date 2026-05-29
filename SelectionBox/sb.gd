@@ -3,7 +3,7 @@ extends CharacterBody2D
 @onready var ramsa: CharacterBody2D = $"../Ramsa"
 
 var is_movement = false
-var cell_pos = Vector2i(-2,13)
+var cell_pos = Vector2i(18,3)
 
 func _ready():
 	position = floor_1.map_to_local(cell_pos)
@@ -28,7 +28,7 @@ func move(x:int,y:int):
 	# Get plain position from registered cell (x,y)
 	var plain_pos = floor_1.map_to_local(cell_pos)
 	# Get future plain position from registered cell position (x,y)
-	var plain_future_pos = Vector2(plain_pos.x + x,plain_pos.y + y)
+	var plain_future_pos = Vector2(plain_pos.x + x,plain_pos.y + (y+1))
 	# Get future cell from future position (tile_cell)
 	var future_cell:Vector2i = floor_1.local_to_map(plain_future_pos)
 	#return if that cell doesnt exist

@@ -3,9 +3,6 @@
 [ext_resource type="Script" uid="uid://b86rojmuolig7" path="res://SelectionBox/sb.gd" id="1_v80g3"]
 [ext_resource type="Texture2D" uid="uid://dp7ixpreqfk0" path="res://Assets/selection_arrow.png" id="2_v80g3"]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_cg0ex"]
-animations = []
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_1wr08"]
 atlas = ExtResource("2_v80g3")
 region = Rect2(0, 0, 32, 32)
@@ -46,18 +43,9 @@ animations = [{
 size = Vector2(32, 18)
 
 [node name="Selection Box" type="CharacterBody2D" unique_id=748368509]
+z_as_relative = false
+y_sort_enabled = true
 script = ExtResource("1_v80g3")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1746366886]
-visible = false
-modulate = Color(1, 0, 0, 1)
-sprite_frames = SubResource("SpriteFrames_cg0ex")
-animation = &""
-
-[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="." unique_id=1285012155]
-visible = false
-sprite_frames = SubResource("SpriteFrames_cg0ex")
-animation = &""
 
 [node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="." unique_id=906474588]
 sprite_frames = SubResource("SpriteFrames_o0dty")
@@ -65,4 +53,7 @@ autoplay = "default"
 frame_progress = 0.8997856
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1152585237]
+visible = false
+z_as_relative = false
+y_sort_enabled = true
 shape = SubResource("RectangleShape2D_4bs27")

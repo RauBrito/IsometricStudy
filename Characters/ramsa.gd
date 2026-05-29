@@ -3,7 +3,7 @@ extends CharacterBody2D
 @onready var floor_1: TileMapLayer = $"../floor_1"
 @export var movement = 3
 
-@export var my_cell = Vector2i(-3,13)
+@export var my_cell = Vector2i(18,3)
 
 func _ready():
 	position = floor_1.map_to_local(my_cell)
@@ -35,19 +35,19 @@ func move_to_tile(target_cells:Array[Vector2i],map_layer:TileMapLayer):
 	target_cells.pop_front()
 	tween.tween_callback(move_to_tile.bind(target_cells,map_layer))
 
-func move_down():
+func move_right():
 	animated_sprite_2d.flip_h = false
 	animated_sprite_2d.play("Face")
 
-func move_up():
+func move_left():
 	animated_sprite_2d.flip_h = true
 	animated_sprite_2d.play("Back")
 
-func move_left():
+func move_down():
 	animated_sprite_2d.flip_h = false
 	animated_sprite_2d.play("Back")
 
-func move_right():
+func move_up():
 	animated_sprite_2d.flip_h = true
 	animated_sprite_2d.play("Face")
 
