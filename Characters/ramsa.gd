@@ -16,6 +16,7 @@ func show_movement():
 		floor_1.create_tile(each)
 
 func move_to_tile(target_cells:Array[Vector2i],map_layer:TileMapLayer):
+	
 	floor_1.modify_cell_content(my_cell,null)
 	if target_cells.size() < 1:
 		#floor_1.set_point_solid(my_cell,true)
@@ -31,8 +32,22 @@ func move_to_tile(target_cells:Array[Vector2i],map_layer:TileMapLayer):
 	
 	var tween = create_tween()
 	var target_data = map_layer.get_cell_data(target_cells[0])
-	tween.tween_property(self, "position", target_data.position, 0.5)
+	var aux = (target_data.position - position)/2
+	print(position)
+	print(target_data.position)
+	print(aux)
+	
+	#tween.tween_property(animated_sprite_2d, "offset",aux, 1)
+	#tween.tween_callback(func():
+		#position = target_data.position
+		#animated_sprite_2d.offset = aux * -1
+	#)
+	#tween.tween_property(animated_sprite_2d, "offset",Vector2(0,target_data.elevation*-8), 1)
+	
+	
+	tween.tween_property(self, "position",target_data.position, 0.5)
 	tween.parallel().tween_property(animated_sprite_2d, "offset", Vector2(0,target_data.elevation*-8), 0.5)
+	
 	target_cells.pop_front()
 	tween.tween_callback(move_to_tile.bind(target_cells,map_layer))
 

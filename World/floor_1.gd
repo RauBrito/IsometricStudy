@@ -137,9 +137,11 @@ func create_tile(cell:Vector2i):
 	var basic_position = map_to_local(cell)
 	var future_position = Vector2(
 		basic_position.x,
-		basic_position.y + (-8*cell_data.elevation)
+		basic_position.y
+		#basic_position.y + (-8*cell_data.elevation)
 	)
 	new_instance.global_position = future_position
+	new_instance.offset_elevation(cell_data.elevation)
 	pass
 
 func remove_tiles():
