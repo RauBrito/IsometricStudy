@@ -7,7 +7,7 @@ extends CharacterBody2D
 var _offset = Vector2(0,7) # 0,11 by def
 
 func _ready():
-	position = floor_1.map_to_local(my_cell)
+	position = floor_1.map_to_local(my_cell) + _offset 
 	floor_1.modify_cell_content(my_cell,self)
 	#show_movement()
 	#position = floor_1.map_to_local(Vector2(20,3))
