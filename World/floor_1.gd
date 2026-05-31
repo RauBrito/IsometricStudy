@@ -165,7 +165,9 @@ func test(cell):
 
 
 func apply_index():
-	var every_cells = get_used_cells()
-	
-	for each in every_cells:
-		var c = get_cell_tile_data(each)
+	pass
+	#var cell = get_cell_tile_data(Vector2(20,3))
+	#print(cell)
+	##cell.texture_origin = Vector2(0,26)
+	#var tween = create_tween()
+	#tween.tween_property(cell, "texture_origin",Vector2(0,26), 4)
