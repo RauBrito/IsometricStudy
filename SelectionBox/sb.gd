@@ -3,6 +3,7 @@ extends CharacterBody2D
 @onready var ramsa: CharacterBody2D = $"../Ramsa"
 @onready var visual: Node2D = $Visual
 @onready var animated_sprite_2d: AnimatedSprite2D = $Visual/AnimatedSprite2D
+@onready var Actions_menu: Control = $"../Actions"
 
 var is_movement = false
 var cell_pos = Vector2i(17,5)
@@ -12,6 +13,18 @@ func _ready():
 	pass
 
 func _input(event):
+	if Actions_menu.is_visible:
+		_handle_move_menu(event)
+	else:
+		_handle_move(event)
+	if event.is_action_pressed("selection"): 
+		selection(event)
+	if event.is_action_pressed("deselection"): 
+		is_movement = false
+		Actions_menu.visible = false
+		floor_1.remove_tiles()
+
+func _handle_move(event):
 	if event.is_action_pressed("up"): 
 		move(16,-8)
 	if event.is_action_pressed("down"): 
@@ -20,11 +33,6 @@ func _input(event):
 		move(-16,-8)
 	if event.is_action_pressed("right"): 
 		move(16,8)
-	if event.is_action_pressed("selection"): 
-		selection()
-	if event.is_action_pressed("deselection"): 
-		is_movement = false
-		floor_1.remove_tiles()
 
 func move(x:int,y:int):
 	# Get plain position from registered cell (x,y)
@@ -70,12 +78,22 @@ func handle_movement():
 			is_movement = true
 			ramsa.show_movement()
 
-func selection():
-	handle_movement()
+func selection(event):
+	if Actions_menu.visible:
+		handle_movement()
+	else:
+		Actions_menu.visible = true
 		
 
 func offset_elevation(amount:int):
 	animated_sprite_2d.offset.y = amount * -8
+
+func _handle_move_menu(event):
+	if event.is_action_pressed("up"): 
+		Actions_menu.selection_up()
+	if event.is_action_pressed("down"): 
+		Actions_menu.selection_down()
+	
 
 #TODO: Fix the duplication of "get_floor_data"
 #FIXME: Tiles and selection box index by elevation

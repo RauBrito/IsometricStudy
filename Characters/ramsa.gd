@@ -107,5 +107,5 @@ func move_test():
 	
 	
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	marker_2d.position = position
