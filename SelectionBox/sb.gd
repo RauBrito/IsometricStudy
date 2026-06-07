@@ -4,8 +4,8 @@ extends CharacterBody2D
 @onready var visual: Node2D = $Visual
 @onready var animated_sprite_2d: AnimatedSprite2D = $Visual/AnimatedSprite2D
 @onready var Actions_menu: Control = $"../Actions"
+@onready var selected_body = null
 
-var is_movement = false
 var cell_pos = Vector2i(17,5)
 
 func _ready():
@@ -13,87 +13,63 @@ func _ready():
 	pass
 
 func _input(event):
-	if Actions_menu.is_visible:
-		_handle_move_menu(event)
+	if Actions_menu.visible:
+		Actions_menu.handle_menu_movement(event)
 	else:
 		_handle_move(event)
 	if event.is_action_pressed("selection"): 
 		selection(event)
 	if event.is_action_pressed("deselection"): 
-		is_movement = false
+		ramsa.is_movement = false
 		Actions_menu.visible = false
 		floor_1.remove_tiles()
 
 func _handle_move(event):
-	if event.is_action_pressed("up"): 
-		move(16,-8)
-	if event.is_action_pressed("down"): 
-		move(-16,8)
-	if event.is_action_pressed("left"): 
-		move(-16,-8)
-	if event.is_action_pressed("right"): 
-		move(16,8)
-
-func move(x:int,y:int):
-	# Get plain position from registered cell (x,y)
-	var plain_pos = floor_1.map_to_local(cell_pos)
-	# Get future plain position from registered cell position (x,y)
-	var plain_future_pos = Vector2(plain_pos.x + x,plain_pos.y + y)
-	# Get future cell from future position (tile_cell)
-	var future_cell:Vector2i = floor_1.local_to_map(plain_future_pos)
-	#return if that cell doesnt exist
-	var can_continue = false
-	for surr_cell in floor_1.get_available_surrounding_cells(cell_pos):
-		if surr_cell == future_cell:
-			can_continue = true
-		
-	if !can_continue:
-		return
-		
-	
-	cell_pos = future_cell
-	var future_cell_data = floor_1.get_cell_data(future_cell)
-	position = Vector2(
-		plain_future_pos.x,
-		plain_future_pos.y
-		#plain_future_pos.y + (-8*future_cell_data.elevation)
-	)
-	offset_elevation(future_cell_data.elevation)
-
-
-func handle_movement():
-	if is_movement:
-		is_movement = false
-		floor_1.remove_tiles()
-		var valid_cells = ramsa.get_valid_movement()
-		if valid_cells.has(cell_pos):
-			var all_cells = floor_1.get_movement_route(ramsa.my_cell,cell_pos)
-			all_cells.pop_front()
-			if all_cells.size() >= 1:
-				ramsa.move_to_tile(all_cells,floor_1)
-		
+	var move = func (x:int,y:int):
+		# Get plain position from registered cell (x,y)
+		var plain_pos = floor_1.map_to_local(cell_pos)
+		# Get future plain position from registered cell position (x,y)
+		var plain_future_pos = Vector2(plain_pos.x + x,plain_pos.y + y)
+		# Get future cell from future position (tile_cell)
+		var future_cell:Vector2i = floor_1.local_to_map(plain_future_pos)
+		#return if that cell doesnt exist
+		var can_continue = false
+		for surr_cell in floor_1.get_available_surrounding_cells(cell_pos):
+			if surr_cell == future_cell:
+				can_continue = true
 			
-	else:
-		if floor_1.test(cell_pos).content is CharacterBody2D:
-			is_movement = true
-			ramsa.show_movement()
+		if !can_continue:
+			return
+			
+		cell_pos = future_cell
+		var future_cell_data = floor_1.get_cell_data(future_cell)
+		position = Vector2(
+			plain_future_pos.x,
+			plain_future_pos.y
+			#plain_future_pos.y + (-8*future_cell_data.elevation)
+		)
+		#offset elevation
+		animated_sprite_2d.offset.y = future_cell_data.elevation * -8
+	
+	if event.is_action_pressed("up"): 
+		move.call(16,-8)
+	if event.is_action_pressed("down"): 
+		move.call(-16,8)
+	if event.is_action_pressed("left"): 
+		move.call(-16,-8)
+	if event.is_action_pressed("right"): 
+		move.call(16,8)
 
 func selection(event):
 	if Actions_menu.visible:
-		handle_movement()
+		#only if move is selected
+		selected_body.menu_move(cell_pos)
 	else:
-		Actions_menu.visible = true
+		var if_content = floor_1.test(cell_pos).content
+		if if_content:
+			Actions_menu.visible = true
+			selected_body = if_content
 		
-
-func offset_elevation(amount:int):
-	animated_sprite_2d.offset.y = amount * -8
-
-func _handle_move_menu(event):
-	if event.is_action_pressed("up"): 
-		Actions_menu.selection_up()
-	if event.is_action_pressed("down"): 
-		Actions_menu.selection_down()
-	
 
 #TODO: Fix the duplication of "get_floor_data"
 #FIXME: Tiles and selection box index by elevation

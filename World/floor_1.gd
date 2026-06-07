@@ -54,7 +54,6 @@ func setup_grid():
 func _ready() -> void:
 	setup_grid()
 	all_floor_data = get_floor_data_old()
-	apply_index()
 	pass
 
 
@@ -162,12 +161,3 @@ func test(cell):
 		if each.cell == cell:
 			result = each
 	return result
-
-
-func apply_index():
-	pass
-	#var cell = get_cell_tile_data(Vector2(20,3))
-	#print(cell)
-	##cell.texture_origin = Vector2(0,26)
-	#var tween = create_tween()
-	#tween.tween_property(cell, "texture_origin",Vector2(0,26), 4)
