@@ -13,16 +13,15 @@ func _ready():
 	pass
 
 func _input(event):
-	if Actions_menu.visible:
-		Actions_menu.handle_menu_movement(event)
-	else:
-		_handle_move(event)
-	if event.is_action_pressed("selection"): 
-		selection(event)
-	if event.is_action_pressed("deselection"): 
-		ramsa.is_movement = false
-		Actions_menu.visible = false
-		floor_1.remove_tiles()
+	if MenuStatus.sb_enable:
+		if event.is_action_pressed("selection"): 
+			selection(event)
+		if event.is_action_pressed("deselection"): 
+			ramsa.is_movement = false
+			Actions_menu.visible = false
+			floor_1.remove_tiles()
+		else:
+			_handle_move(event)
 
 func _handle_move(event):
 	var move = func (x:int,y:int):
