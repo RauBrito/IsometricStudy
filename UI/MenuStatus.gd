@@ -1,3 +1,4 @@
+# Variable global
 extends Node
 
 var sb_enable:bool = true
