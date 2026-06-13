@@ -62,7 +62,6 @@ script = ExtResource("1_n1bre")
 layout_mode = 0
 offset_right = 61.0
 offset_bottom = 83.0
-focus_behavior_recursive = 2
 theme_override_constants/separation = 1
 
 [node name="MoveBtn" type="Button" parent="Ctn" unique_id=1601124447]
@@ -137,9 +136,3 @@ metadata/_edit_lock_ = true
 
 [connection signal="focus_entered" from="Ctn/MoveBtn" to="." method="_on_move_btn_focus_entered"]
 [connection signal="pressed" from="Ctn/MoveBtn" to="." method="_on_move_btn_pressed"]
-[connection signal="focus_entered" from="Ctn/AttackBtn" to="." method="_on_attack_btn_focus_entered"]
-[connection signal="pressed" from="Ctn/AttackBtn" to="." method="_on_attack_btn_pressed"]
-[connection signal="focus_entered" from="Ctn/SkillsBtn" to="." method="_on_skills_btn_focus_entered"]
-[connection signal="pressed" from="Ctn/SkillsBtn" to="." method="_on_skills_btn_pressed"]
-[connection signal="focus_entered" from="Ctn/EndTurnBtn" to="." method="_on_end_turn_btn_focus_entered"]
-[connection signal="pressed" from="Ctn/EndTurnBtn" to="." method="_on_end_turn_btn_pressed"]

@@ -461,6 +461,8 @@ metadata/_edit_lock_ = true
 z_as_relative = false
 
 [node name="Actions" parent="." unique_id=852421120 instance=ExtResource("5_k8do8")]
+visible = false
+top_level = true
 offset_left = 522.0
 offset_top = 34.0
 offset_right = 522.0

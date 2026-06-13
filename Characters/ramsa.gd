@@ -89,6 +89,7 @@ func handle_movement(cell_pos:Vector2):
 
 
 func show_movement():
+	MenuStatus.enable_sb()
 	is_movement = true
 	var valid_cells = get_valid_movement()
 	for each in valid_cells:

@@ -12,7 +12,7 @@ func _ready():
 	position = floor_1.map_to_local(cell_pos)
 	pass
 
-func _input(event):
+func _unhandled_input(event):
 	if MenuStatus.sb_movement:
 		if event.is_action_pressed("selection"): 
 			selection(event)
@@ -61,9 +61,10 @@ func _handle_move(event):
 		move.call(16,8)
 
 func selection(event):
-	if Actions_menu.visible:
+	if selected_body and selected_body.is_movement:
+		print("ok")
 		#only if move is selected
-		#selected_body.menu_move(cell_pos)
+		selected_body.handle_movement(cell_pos)
 		return
 	else:
 		var if_content = floor_1.test(cell_pos).content
