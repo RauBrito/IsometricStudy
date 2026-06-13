@@ -28,7 +28,7 @@ func move_to_tile(target_cells:Array[Vector2i],map_layer:TileMapLayer):
 		Vector2i(0,1): move_axis("RIGHT")
 	
 	var tween = create_tween()
-	var target_data = map_layer.get_cell_data(target_cells[0])
+	var target_data = floor_1.get_cell_data(target_cells[0])
 	
 	var anim_offset = Vector2(0,target_data.elevation*-8)
 	var pos = target_data.position + _offset 
@@ -37,7 +37,7 @@ func move_to_tile(target_cells:Array[Vector2i],map_layer:TileMapLayer):
 	tween.parallel().tween_property(animated_sprite_2d, "offset",anim_offset , 0.5)
 	
 	target_cells.pop_front()
-	tween.tween_callback(move_to_tile.bind(target_cells,map_layer))
+	tween.tween_callback(move_to_tile.bind(target_cells,floor_1))
 
 func move_axis(direction:String):
 	if direction == "UP":
@@ -74,22 +74,22 @@ func get_valid_movement()->Array[Vector2i]:
 		queue = unique
 	
 	valid_cells.append_array(queue)
+	valid_cells.reverse()
 	return valid_cells
 
 var is_movement = false
-func menu_move(cell_pos:Vector2):
-	if is_movement:
-		is_movement = false
-		floor_1.remove_tiles()
-		if get_valid_movement().has(cell_pos):
-			var all_cells = floor_1.get_movement_route(my_cell,cell_pos)
-			all_cells.pop_front()
-			if all_cells.size() >= 1:
-				move_to_tile(all_cells,floor_1)
-	else:
-		#show_movement
-		is_movement = true
-		var valid_cells = get_valid_movement()
-		valid_cells.reverse()
-		for each in valid_cells:
-			floor_1.create_tile(each)
+func handle_movement(cell_pos:Vector2):
+	is_movement = false
+	floor_1.remove_tiles()
+	if get_valid_movement().has(cell_pos):
+		var all_cells = floor_1.get_movement_route(my_cell,cell_pos)
+		all_cells.pop_front()
+		if all_cells.size() >= 1:
+			move_to_tile(all_cells,floor_1)
+
+
+func show_movement():
+	is_movement = true
+	var valid_cells = get_valid_movement()
+	for each in valid_cells:
+		floor_1.create_tile(each)

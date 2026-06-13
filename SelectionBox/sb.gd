@@ -13,12 +13,13 @@ func _ready():
 	pass
 
 func _input(event):
-	if MenuStatus.sb_enable:
+	if MenuStatus.sb_movement:
 		if event.is_action_pressed("selection"): 
 			selection(event)
 		if event.is_action_pressed("deselection"): 
 			ramsa.is_movement = false
 			Actions_menu.visible = false
+			MenuStatus.enable_sb()
 			floor_1.remove_tiles()
 		else:
 			_handle_move(event)
@@ -62,13 +63,16 @@ func _handle_move(event):
 func selection(event):
 	if Actions_menu.visible:
 		#only if move is selected
-		selected_body.menu_move(cell_pos)
+		#selected_body.menu_move(cell_pos)
+		return
 	else:
 		var if_content = floor_1.test(cell_pos).content
 		if if_content:
 			Actions_menu.visible = true
 			selected_body = if_content
-		
+			MenuStatus.enable_menu()
+		elif selected_body.is_movement:
+			selected_body.handle_movement(cell_pos)
 
 #TODO: Fix the duplication of "get_floor_data"
 #FIXME: Tiles and selection box index by elevation
