@@ -57,7 +57,7 @@ func _ready():
 	btn_focus()
 
 func btn_focus():
-	grab_focus()
+	move_btn.grab_focus()
 
 
 #SIGNALS

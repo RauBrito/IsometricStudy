@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://b47bplqnywaim"]
+
+[ext_resource type="Texture2D" uid="uid://dqr1x0hn0ylis" path="res://Assets/RamzaPFP.png" id="1_jxkde"]
+[ext_resource type="Script" uid="uid://dlihurgxgmang" path="res://UI/ProfileCard/profile_card.gd" id="1_tbwe5"]
+
+[node name="ProfileCard" type="Control" unique_id=1504216008]
+visible = false
+layout_mode = 3
+anchor_right = 0.25300002
+anchor_bottom = 0.22500001
+offset_left = 24.0
+offset_top = 255.0
+offset_right = 24.079987
+offset_bottom = 255.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_tbwe5")
+
+[node name="Panel" type="Panel" parent="." unique_id=253827539]
+layout_mode = 0
+offset_top = 34.0
+offset_right = 162.0
+offset_bottom = 81.0
+
+[node name="Label" type="Label" parent="Panel" unique_id=422202517]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 3.0
+offset_right = 104.0
+offset_bottom = 15.0
+theme_override_font_sizes/font_size = 8
+text = "Ramza"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1554279530]
+position = Vector2(30, 40)
+texture = ExtResource("1_jxkde")
+metadata/_edit_lock_ = true

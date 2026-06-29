@@ -5,6 +5,7 @@ extends CharacterBody2D
 @onready var animated_sprite_2d: AnimatedSprite2D = $Visual/AnimatedSprite2D
 @onready var Actions_menu: Control = $"../Actions"
 @onready var selected_body = null
+@onready var profile_card: Control = $"../ProfileCard"
 
 var cell_pos = Vector2i(17,5)
 
@@ -65,15 +66,18 @@ func selection(event):
 		print("ok")
 		#only if move is selected
 		selected_body.handle_movement(cell_pos)
+		profile_card.self_hide()
 		return
 	else:
 		var if_content = floor_1.test(cell_pos).content
 		if if_content:
+			profile_card.self_show()
 			Actions_menu.visible = true
+			Actions_menu.btn_focus()
 			selected_body = if_content
 			MenuStatus.enable_menu()
-		elif selected_body.is_movement:
-			selected_body.handle_movement(cell_pos)
+		#elif selected_body.is_movement:
+			#selected_body.handle_movement(cell_pos)
 
 #TODO: Fix the duplication of "get_floor_data"
 #FIXME: Tiles and selection box index by elevation

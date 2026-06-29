@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://b8x1u0jx8fnjb" path="res://SelectionBox/selection_box.tscn" id="3_paxgx"]
 [ext_resource type="PackedScene" uid="uid://dqsnvc1rh2hg7" path="res://UI/Action/Actions.tscn" id="5_k8do8"]
 [ext_resource type="PackedScene" uid="uid://cltqn0rc00v8d" path="res://Characters/Ramsa.tscn" id="5_kjrp3"]
+[ext_resource type="PackedScene" uid="uid://b47bplqnywaim" path="res://UI/ProfileCard/ProfileCard.tscn" id="6_bkhv4"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_s2gog"]
 vertices = PackedVector2Array(16, -16, 0, -8, -16, -16, 0, -24)
@@ -467,3 +468,5 @@ offset_left = 522.0
 offset_top = 34.0
 offset_right = 522.0
 offset_bottom = 34.0
+
+[node name="ProfileCard" parent="." unique_id=1504216008 instance=ExtResource("6_bkhv4")]

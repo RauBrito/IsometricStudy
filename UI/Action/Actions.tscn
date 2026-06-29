@@ -132,7 +132,7 @@ text = "Move"
 position = Vector2(0, 10)
 sprite_frames = SubResource("SpriteFrames_tww7w")
 autoplay = "default"
-frame_progress = 0.4676813
+frame_progress = 0.5539826
 metadata/_edit_lock_ = true
 
 [connection signal="focus_entered" from="Ctn/MoveBtn" to="." method="_on_move_btn_focus_entered"]

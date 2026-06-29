@@ -79,6 +79,7 @@ position = Vector2(0, -18)
 sprite_frames = SubResource("SpriteFrames_l7ijt")
 animation = &"Face"
 autoplay = "Face"
+frame_progress = 0.89416784
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1089885062]
 visible = false
